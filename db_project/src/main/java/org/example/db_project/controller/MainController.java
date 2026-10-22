@@ -9,11 +9,13 @@ public class MainController {
     @FXML private TabPane tabPane;
     @FXML private Tab productsTab;
     @FXML private Tab ordersTab;
+    @FXML private Tab reportsTab;
 
     // For <fx:include fx:id="xyz" .../>, JavaFX injects the included
     // file's controller into a field named "xyz" + "Controller".
     @FXML private ProductController productViewController;
     @FXML private OrderController orderViewController;
+    @FXML private ReportController reportViewController;
 
     @FXML
     public void initialize() {
@@ -23,6 +25,8 @@ public class MainController {
                 productViewController.refresh();
             } else if (newTab == ordersTab) {
                 orderViewController.refresh();
+            } else if (newTab == reportsTab) {
+                reportViewController.refresh();
             }
         });
     }

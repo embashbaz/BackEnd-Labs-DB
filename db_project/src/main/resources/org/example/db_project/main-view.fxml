@@ -25,5 +25,10 @@
                 <fx:include fx:id="orderView" source="order-view.fxml"/>
             </content>
         </Tab>
+        <Tab fx:id="reportsTab" text="Reports">
+            <content>
+                <fx:include fx:id="reportView" source="report-view.fxml"/>
+            </content>
+        </Tab>
     </tabs>
 </TabPane>

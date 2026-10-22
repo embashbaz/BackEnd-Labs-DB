@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.db_project.controller.ReportController">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <top>
+        <VBox spacing="10">
+            <Label text="Reports" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Report:"/>
+                <ComboBox fx:id="reportCombo" prefWidth="220"/>
+                <Label fx:id="reportDescriptionLabel" style="-fx-text-fill: #666666;" wrapText="true"/>
+            </HBox>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="From:"/>
+                <DatePicker fx:id="fromDatePicker" prefWidth="130" promptText="Any"/>
+                <Label text="To:"/>
+                <DatePicker fx:id="toDatePicker" prefWidth="130" promptText="Any"/>
+                <Button text="Clear dates" onAction="#handleClearDates"/>
+                <Label text="Show top:"/>
+                <Spinner fx:id="limitSpinner" min="1" max="1000" initialValue="10" prefWidth="85"/>
+                <Label text="Min. orders:"/>
+                <Spinner fx:id="minOrdersSpinner" min="1" max="1000" initialValue="1" prefWidth="80"/>
+                <Button text="Run report" onAction="#handleRunReport" defaultButton="true"/>
+                <Button text="Export CSV" onAction="#handleExportCsv"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="reportTable">
+            <BorderPane.margin>
+                <Insets top="10" bottom="10"/>
+            </BorderPane.margin>
+        </TableView>
+    </center>
+
+    <bottom>
+        <Label fx:id="statusLabel"/>
+    </bottom>
+</BorderPane>
