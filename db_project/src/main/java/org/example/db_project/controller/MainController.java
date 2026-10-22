@@ -8,17 +8,21 @@ public class MainController {
 
     @FXML private TabPane tabPane;
     @FXML private Tab productsTab;
+    @FXML private Tab ordersTab;
 
-    // For <fx:include fx:id="productView" .../>, JavaFX injects the included
-    // file's controller into a field named fx:id + "Controller".
+    // For <fx:include fx:id="xyz" .../>, JavaFX injects the included
+    // file's controller into a field named "xyz" + "Controller".
     @FXML private ProductController productViewController;
+    @FXML private OrderController orderViewController;
 
     @FXML
     public void initialize() {
-        // Refresh products whenever the tab is opened, so category changes show up
+        // Refresh a tab whenever it's opened, so changes made on other tabs show up
         tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab == productsTab) {
                 productViewController.refresh();
+            } else if (newTab == ordersTab) {
+                orderViewController.refresh();
             }
         });
     }

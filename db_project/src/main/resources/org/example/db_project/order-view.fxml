@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.db_project.controller.OrderController">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <top>
+        <Label text="Order Management" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    </top>
+
+    <!-- Left/centre: existing orders -->
+    <center>
+        <VBox spacing="8">
+            <BorderPane.margin>
+                <Insets top="10" bottom="10"/>
+            </BorderPane.margin>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Show:"/>
+                <ComboBox fx:id="statusFilterCombo" prefWidth="160" onAction="#handleFilterChanged"/>
+            </HBox>
+
+            <TableView fx:id="orderTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="orderIdColumn" text="Order #" prefWidth="70"/>
+                    <TableColumn fx:id="customerColumn" text="Customer" prefWidth="160"/>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="140"/>
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100"/>
+                    <TableColumn fx:id="itemCountColumn" text="Lines" prefWidth="60"/>
+                    <TableColumn fx:id="totalColumn" text="Total" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <Label text="Items in selected order" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="itemsTable" prefHeight="170">
+                <columns>
+                    <TableColumn fx:id="itemProductColumn" text="Product" prefWidth="250"/>
+                    <TableColumn fx:id="itemQuantityColumn" text="Qty" prefWidth="60"/>
+                    <TableColumn fx:id="itemPriceColumn" text="Unit price" prefWidth="100"/>
+                    <TableColumn fx:id="itemLineTotalColumn" text="Line total" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Change status to:"/>
+                <ComboBox fx:id="newStatusCombo" prefWidth="150"/>
+                <Button fx:id="updateStatusButton" text="Update status" onAction="#handleUpdateStatus"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- Right: create a new order -->
+    <right>
+        <VBox spacing="8" prefWidth="400">
+            <BorderPane.margin>
+                <Insets left="15" top="10" bottom="10"/>
+            </BorderPane.margin>
+
+            <Label text="New order" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+
+            <Label text="Customer *"/>
+            <ComboBox fx:id="customerCombo" maxWidth="Infinity" promptText="Choose a customer"/>
+
+            <Label text="Product"/>
+            <HBox spacing="8">
+                <TextField fx:id="productSearchField" promptText="Type part of a product name"
+                           HBox.hgrow="ALWAYS" onAction="#handleFindProducts"/>
+                <Button text="Find" onAction="#handleFindProducts"/>
+            </HBox>
+            <ComboBox fx:id="productCombo" maxWidth="Infinity" promptText="Search results appear here"/>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Qty"/>
+                <TextField fx:id="quantityField" text="1" prefWidth="70" onAction="#handleAddToCart"/>
+                <Button text="Add to order" onAction="#handleAddToCart"/>
+            </HBox>
+
+            <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="cartProductColumn" text="Product" prefWidth="170"/>
+                    <TableColumn fx:id="cartQuantityColumn" text="Qty" prefWidth="50"/>
+                    <TableColumn fx:id="cartPriceColumn" text="Price" prefWidth="75"/>
+                    <TableColumn fx:id="cartLineTotalColumn" text="Line total" prefWidth="85"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Button text="Remove line" onAction="#handleRemoveFromCart"/>
+                <Button text="Clear" onAction="#handleClearCart"/>
+                <Label fx:id="cartTotalLabel" style="-fx-font-weight: bold;"/>
+            </HBox>
+
+            <Button text="Place order" onAction="#handlePlaceOrder" maxWidth="Infinity"
+                    style="-fx-font-weight: bold;"/>
+        </VBox>
+    </right>
+
+    <bottom>
+        <Label fx:id="statusLabel"/>
+    </bottom>
+</BorderPane>

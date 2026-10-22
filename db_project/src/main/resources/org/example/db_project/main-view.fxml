@@ -8,7 +8,7 @@
          fx:controller="org.example.db_project.controller.MainController"
          fx:id="tabPane"
          tabClosingPolicy="UNAVAILABLE"
-         prefWidth="1100" prefHeight="650">
+         prefWidth="1250" prefHeight="720">
     <tabs>
         <Tab text="Categories">
             <content>
@@ -18,6 +18,11 @@
         <Tab fx:id="productsTab" text="Products">
             <content>
                 <fx:include fx:id="productView" source="product-view.fxml"/>
+            </content>
+        </Tab>
+        <Tab fx:id="ordersTab" text="Orders">
+            <content>
+                <fx:include fx:id="orderView" source="order-view.fxml"/>
             </content>
         </Tab>
     </tabs>
