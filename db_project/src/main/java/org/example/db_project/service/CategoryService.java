@@ -25,8 +25,8 @@ public class CategoryService {
     private final CategoryDAO dao = new CategoryDAO();
 
     // Hash-based cache: id -> Category, O(1) lookup. LinkedHashMap keeps DB order (by name).
-    private final Map<Integer, Category> cache = new LinkedHashMap<>();
-    private boolean cacheValid = false;
+    private static final Map<Integer, Category> cache = new LinkedHashMap<>();
+    private static boolean cacheValid = false;
 
     public List<Category> getAllCategories() throws SQLException {
         if (!cacheValid) {
