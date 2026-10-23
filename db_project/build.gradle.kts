@@ -1,3 +1,4 @@
+
 plugins {
     java
     application
@@ -51,4 +52,12 @@ jlink {
     launcher {
         name = "app"
     }
+}
+
+tasks.register<JavaExec>("benchmark") {
+    group = "verification"
+    description = "Times the main queries and saves results to benchmark-results/"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("org.example.db_project.benchmark.PerformanceBenchmark")
+    args(project.findProperty("label")?.toString() ?: "before")
 }
