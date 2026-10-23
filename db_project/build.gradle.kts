@@ -61,3 +61,8 @@ tasks.register<JavaExec>("benchmark") {
     mainClass.set("org.example.db_project.benchmark.PerformanceBenchmark")
     args(project.findProperty("label")?.toString() ?: "before")
 }
+
+tasks.register<JavaExec>("dsaDemo") {
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("org.example.db_project.dsa.DsaDemo")
+}
