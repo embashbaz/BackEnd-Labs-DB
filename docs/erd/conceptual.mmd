@@ -1,0 +1,7 @@
+erDiagram
+    USER ||--o{ ORDER : places
+    ORDER }o--|{ PRODUCT : contains
+    CATEGORY ||--o{ PRODUCT : groups
+    PRODUCT ||--o| INVENTORY : "is stocked as"
+    USER ||--o{ REVIEW : writes
+    PRODUCT ||--o{ REVIEW : receives

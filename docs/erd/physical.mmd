@@ -1,0 +1,58 @@
+erDiagram
+    users ||--o{ orders : "orders.user_id"
+    orders ||--|{ order_items : "order_items.order_id"
+    products ||--o{ order_items : "order_items.product_id"
+    categories ||--o{ products : "products.category_id"
+    products ||--o| inventory : "inventory.product_id"
+    users ||--o{ reviews : "reviews.user_id"
+    products ||--o{ reviews : "reviews.product_id"
+
+    users {
+        int user_id PK "GENERATED ALWAYS AS IDENTITY"
+        varchar(100) full_name "NOT NULL"
+        varchar(255) email UK "NOT NULL, unique index on LOWER(email)"
+        varchar(255) password_hash "NOT NULL"
+        varchar(20) role "NOT NULL, DEFAULT 'CUSTOMER', CHECK IN ('CUSTOMER', 'ADMIN')"
+        timestamp created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+    }
+    categories {
+        int category_id PK "GENERATED ALWAYS AS IDENTITY"
+        varchar(100) name UK "NOT NULL, unique index on LOWER(name)"
+        text description
+        timestamp created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+    }
+    products {
+        int product_id PK "GENERATED ALWAYS AS IDENTITY"
+        int category_id FK "NOT NULL, ON DELETE RESTRICT"
+        varchar(150) name "NOT NULL"
+        text description
+        numeric price "NUMERIC(10,2) NOT NULL, CHECK (price >= 0)"
+        timestamp created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+        timestamp updated_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+    }
+    inventory {
+        int product_id PK, FK "ON DELETE CASCADE"
+        int quantity_on_hand "NOT NULL, DEFAULT 0, CHECK (>= 0)"
+        int reorder_level "NOT NULL, DEFAULT 5, CHECK (>= 0)"
+        timestamp updated_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+    }
+    orders {
+        int order_id PK "GENERATED ALWAYS AS IDENTITY"
+        int user_id FK "NOT NULL, ON DELETE RESTRICT"
+        timestamp order_date "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+        varchar(20) status "NOT NULL, DEFAULT 'PENDING', CHECK IN (5 statuses)"
+    }
+    order_items {
+        int order_id PK, FK "ON DELETE CASCADE"
+        int product_id PK, FK "ON DELETE RESTRICT"
+        int quantity "NOT NULL, CHECK (quantity > 0)"
+        numeric unit_price "NUMERIC(10,2) NOT NULL, CHECK (unit_price >= 0)"
+    }
+    reviews {
+        int review_id PK "GENERATED ALWAYS AS IDENTITY"
+        int product_id FK "NOT NULL, ON DELETE CASCADE, UNIQUE (product_id, user_id)"
+        int user_id FK "NOT NULL, ON DELETE CASCADE"
+        smallint rating "NOT NULL, CHECK (rating BETWEEN 1 AND 5)"
+        text comment
+        timestamp created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
+    }

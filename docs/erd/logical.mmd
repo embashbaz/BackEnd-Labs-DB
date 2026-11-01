@@ -1,0 +1,58 @@
+erDiagram
+    USER ||--o{ ORDER : places
+    ORDER ||--|{ ORDER_ITEM : contains
+    PRODUCT ||--o{ ORDER_ITEM : "appears in"
+    CATEGORY ||--o{ PRODUCT : groups
+    PRODUCT ||--o| INVENTORY : "is stocked as"
+    USER ||--o{ REVIEW : writes
+    PRODUCT ||--o{ REVIEW : receives
+
+    USER {
+        int user_id PK
+        string full_name
+        string email UK
+        string password_hash
+        string role "CUSTOMER or ADMIN"
+        datetime created_at
+    }
+    CATEGORY {
+        int category_id PK
+        string name UK
+        string description
+        datetime created_at
+    }
+    PRODUCT {
+        int product_id PK
+        int category_id FK
+        string name
+        string description
+        decimal price
+        datetime created_at
+        datetime updated_at
+    }
+    INVENTORY {
+        int product_id PK, FK
+        int quantity_on_hand
+        int reorder_level
+        datetime updated_at
+    }
+    ORDER {
+        int order_id PK
+        int user_id FK
+        datetime order_date
+        string status "PENDING, PAID, SHIPPED, DELIVERED, CANCELLED"
+    }
+    ORDER_ITEM {
+        int order_id PK, FK
+        int product_id PK, FK
+        int quantity
+        decimal unit_price "price at time of purchase"
+    }
+    REVIEW {
+        int review_id PK
+        int product_id FK "unique together with user_id"
+        int user_id FK
+        int rating "1 to 5"
+        string comment
+        datetime created_at
+    }
